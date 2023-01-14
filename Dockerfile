@@ -1,6 +1,12 @@
-FROM openjdk:11-jdk-oracle
-WORKDIR /docker-research
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} docker-research-0.0.1-SNAPSHOT.jar
-ENTRYPOINT ["java","-jar","/docker-research-0.0.1-SNAPSHOT.jar"]
+FROM gradle
 
+WORKDIR /docker-research-build-own-image
+
+COPY . /docker-research-build-own-image
+
+RUN gradle clean build --refresh-dependencies
+
+EXPOSE 80
+
+#CMD ["gradle", "bootRun"]
+CMD ["java", "-jar", "/docker-research-build-own-image/build/libs/docker-research-0.0.1-SNAPSHOT.jar"]

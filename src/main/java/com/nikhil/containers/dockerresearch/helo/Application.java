@@ -10,7 +10,7 @@ public class Application {
 
     @RequestMapping("/")
     public String home() {
-        return "Hello Docker World";
+        return "Just Stop ... Testing rebuild requirement again and again";
     }
 
 }
