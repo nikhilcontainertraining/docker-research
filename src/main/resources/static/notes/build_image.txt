@@ -1,0 +1,14 @@
+docker build .
+
+docker build -t docker-research-image/docker-research .
+
+docker build --build-arg JAR_FILE=build/libs/\*.jar -t docker-research-image/docker-research .
+
+docker run image_id/hash/short_hand_hash
+
+docker run -p 8080:8080 image_id
+
+docker run -p 8080:8080 image_name
+
+docker container rename container_id container_name
+

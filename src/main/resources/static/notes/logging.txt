@@ -17,7 +17,21 @@ docker logs container_id/container_name
 docker logs -f container_id/container_name
     to fetch all the previous logs + [continue streaming]
 
+docker start -a container_id/container_name
+    to start a docker container in attached mode
 
+-------------------------------------------------------------------
 
+docker cp container_name:/app_directory/logs/ /optional_local_directory/logs/
+
+    docker cp friendly_gould:/docker-research-build-own-image/logs/ logs/
+        to copy logs file etc.. from container into local directory(logs)
+            if local dir "logs" is not present then creates new
+                if the commands return "mkdir /logs: read-only file system" error
+
+                    sudo chown -R $(whoami) /logs
+                        to give write permissions
+
+-------------------------------------------------------------------
 
 

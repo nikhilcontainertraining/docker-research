@@ -4,7 +4,7 @@ WORKDIR /docker-research-build-own-image
 
 COPY . /docker-research-build-own-image
 
-RUN gradle clean build --refresh-dependencies
+RUN gradle clean build
 
 EXPOSE 80
 

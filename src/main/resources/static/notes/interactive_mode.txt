@@ -1,0 +1,54 @@
+docker run -i image_id/image_name/hash
+    for standard input operations with the container during or after container is started
+
+docker run -i -t image_id/image_name
+    "t" is for the docker to provide a TTY for interaction
+
+docker run -it image_id/image_name
+    the above 2 commands together
+
+docker run -ai image_id/image_name
+    to attach with running container in interactive mode
+
+docker run -ait image_id
+    to run with "t" during the first run
+    if restarting a container with "docker start" then "t" is not required
+    docker remembers/memorizes the previously provided input
+
+
+docker start -it container_id/container_name
+    to start the container in interactive mode
+
+docker run -it -a STDIN -p 8080:8080 b75b6f736c00
+    to start a container in interactive and terminal mode and attached mode with STDIN(standard input)
+
+docker run -it -a STDIN -a STDOUT -a STDERR -p 8080:8080 b75b6f736c00
+    to start a container in interactive and terminal mode and attached mode in either STDIN or/and STDOUT or/add STDERR
+
+---------------------------------------------------------
+
+interactive mode is required when some input to application is feed from terminal
+    for example -
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        serverName = reader.readLine();
+
+---------------------------------------------------------
+additional notes
+
+docker image inspect 73b1efe6b6f1
+    to access the image properties, configs, associated containers, container properties and configs
+
+docker image tag 73b1 interactive-joke-app
+    to add a tag to an image
+
+docker image inspect interactive-joke-app
+    to inspect an image by tag
+
+docker ps -a
+    to display running and stopped containers
+
+docker images
+    to display all local images
+
+
+

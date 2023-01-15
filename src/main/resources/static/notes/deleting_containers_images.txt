@@ -1,0 +1,41 @@
+docker images
+    displays all the images on local
+
+docker image rm image_id/tag
+    to delete an image
+
+docker rmi image_id/tag
+    to delete an image and its layers
+
+docker image rm image_id_1 image_id_2 image_id_3 .. .. ..
+    to delete multiple docker images at once by image id
+
+docker rmi image_id_1 image_id_2 image_id_3 .. .. ..
+    to delete multiple images
+
+docker images prune
+    delete all images that are not associated with running or stopper containers
+
+-------------------------
+
+docker ps -a
+    displays all the containers on local that running and/or stopped
+
+docker rm container_id/name
+    to delete a container
+
+docker container rm container_id/container_name
+    to delete container by container id/name
+
+docker container rm container_id/container_name -f
+    to force delete a container that is dependent on another container which is running or stopped
+     either unlink the containers then delete or force delete
+
+docker container prune
+    delete all containers that are not running and those which are not interdependent
+
+-------------------------
+
+docker rm vs rmi
+rm - for containers
+rmi - for images
