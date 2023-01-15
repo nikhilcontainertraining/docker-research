@@ -1,0 +1,19 @@
+docker build -t interactive-joke-image:nik1 .
+
+    to build an image of interactive joke app with name and tag in the "name:tag" format
+    name    = interactive-joke-image        // it will be identified as repository in images cmd response
+    tag     = nik1                          // can be used for versioning and other purposes
+
+docker run -p 8080:8080 --rm --name interactive-joke-app image_id
+    to assign name known name to the container before starting it; using "--name"
+
+docker run -it --rm -p 8080:8080 -a STDIN -a STDOUT -a STDERR  --name interactive-joke-app interactive-joke-image:nikki
+    to run docker container with the name interactive-joke-app; "--name"
+    to run docker container from the image interactive-joke-image:nikki
+    to ensure that the container is deleted after it is stopped; "--rm"
+    to have console/terminal attached for standard input and interactive mode - for "System.in"; "-a", "-it"
+    to have the application route traffic from port 8080 to external port 8080
+
+
+
+

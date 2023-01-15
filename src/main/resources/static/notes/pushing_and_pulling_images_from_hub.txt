@@ -1,0 +1,34 @@
+create a repository in docker hub
+    - the repository name is interactive-joke
+    - it can be public pr private
+    -
+
+docker push nikhilcontainertraining/interactive-joke
+    to the image from local to interactive-joke repository in my docker hub account "nikhilcontainertraining"
+    here "nikhilcontainertraining" is dockerhub ID
+    if the push returns an error stating "An image does not exist locally with the tag: nikhilcontainertraining/interactive-joke"
+        meaning that repo doesn't exists locally and local docker demon is unaware new repo created in remote hub
+        hence the repo and/or image needs to created first -OR-
+        rename and existing repo with the name "docker_id/repo_name"
+
+docker tag interactive-joke-image:nik1 nikhilcontainertraining/interactive-joke
+    to rename and existing repo with the name "docker_id/repo_name"
+    this create a CLONE of the image.. it is NOT actually renaming the existing image
+
+docker build -t nikhilcontainertraining/interactive-joke .
+    to build new image with required name:tag or just name
+    name has to be "docker_id/repo_name" or "docker_id/repo_name:nik1"
+
+-----------------------------------------------------------------------
+
+docker pull nikhilcontainertraining/interactive-joke
+docker pull nikhilcontainertraining/interactive-joke:nik1
+    to pull the prebuild docker image from hub
+
+docker run -it -p 8080:8080 --name interactive-joke-container-nik2 nikhilcontainertraining/interactive-joke:nik2
+    to pull and run a prebuilt image "nikhilcontainertraining/interactive-joke:nik2"
+    the version of the image that is downloaded is "nik2"
+    the container is named "interactive-joke-container-nik2"
+
+
+-----------------------------------------------------------------------
