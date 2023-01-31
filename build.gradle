@@ -14,9 +14,13 @@ repositories {
 
 dependencies {
 
+//	compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
+//	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
+
 	implementation ('org.springframework.boot:spring-boot-starter-web') {
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 	}
+	implementation 'commons-io:commons-io:2.11.0'
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
 	implementation 'org.projectlombok:lombok:1.18.20'
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
@@ -25,4 +29,10 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+	from ("${projectDir}/src/main/webapp") {
+		include('/**')
+	}
 }

@@ -1,12 +1,15 @@
 FROM gradle
 
-WORKDIR /docker-research-build-own-image
+WORKDIR /app
 
-COPY . /docker-research-build-own-image
+#COPY /build/libs/docker-research-0.0.1-SNAPSHOT.jar /app/docker-research-0.0.1-SNAPSHOT.jar
+COPY . .
 
 RUN gradle clean build
 
 EXPOSE 80
 
-#CMD ["gradle", "bootRun"]
-CMD ["java", "-jar", "/docker-research-build-own-image/build/libs/docker-research-0.0.1-SNAPSHOT.jar"]
+VOLUME [ "/app/joke_vol" ]
+
+CMD ["gradle", "bootRun"]
+#CMD ["java", "-jar", "/app/docker-research-0.0.1-SNAPSHOT.jar"]

@@ -18,21 +18,21 @@ public class DockerResearchApplication {
 
 	static Logger log = LogManager.getLogger(DockerResearchApplication.class);
 
-	public static String serverName = "";
+	public static String userName = "Default Server";
 
 	public static void main(String[] args) {
 		log.trace("starting Docker Research Application");
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			serverName = reader.readLine();
-			System.out.println("On Startup input :: " + serverName);
+//			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//			userName = reader.readLine();
+			System.out.println("On Startup input :: " + userName);
 		} catch (Exception e) {
 			//System.out.println("System Error: " + e.getMessage());
 
 			log.error("System Error: " + e.getMessage());
-			serverName = "faulty system";
+			userName = "faulty system";
 
-			log.error("Falling back to default server name: " + serverName);
+			log.error("Falling back to default server name: " + userName);
 		}
 		SpringApplication.run(DockerResearchApplication.class, args);
 
