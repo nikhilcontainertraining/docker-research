@@ -41,12 +41,12 @@ public class FileHandler {
         }
 
         try {
-            writeToFile("app/joke_vol", fileName, content);
+            writeToFile("joke_vol", fileName, content);
 
 //            copyToLocation("src/main/resources/static/json-files/"+fileName,
 //                    "/app/joke_vol"+fileName);
         } catch (Exception e) {
-//            log.error(e.getStackTrace());
+            log.error("------ ------ Exception occurred");
             e.printStackTrace();
         }
 
@@ -69,20 +69,27 @@ public class FileHandler {
     public void writeToFile(String rootDir, String fileName, byte[] bytes) {
         log.info("------------------------------------------------------------");
         FileOutputStream fos = null;
+        File file = null;
         try {
-            File file = new File(rootDir, fileName);
+            file = new File(rootDir, fileName);
             fos = new FileOutputStream(file);
             fos.write(bytes);
             fos.flush();
+
         } catch (FileNotFoundException e) {
-            //log.error(e.getStackTrace());
+            log.error("------ ------ FileNotFoundException occurred");
+            log.error(e.getStackTrace());
         } catch (IOException e) {
-            //log.error(e.getStackTrace());
+            log.error("------ ------ IOException occurred");
+            log.error(e.getStackTrace());
         }
+        log.info("-- file rel path -- " + file.getPath());
+        log.info("-- file abs path -- " + file.getAbsolutePath());
+
     }
 
     public InputStream getFile(String fileName) throws IOException {
-        return new FileInputStream("app/joke_vol/"+fileName);
+        return new FileInputStream("joke_vol/"+fileName);
         //return new FileInputStream("/app/joke_vol/"+fileName);
     }
 
