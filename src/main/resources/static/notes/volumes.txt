@@ -1,0 +1,76 @@
+
+
+-------------------------------
+Creating a volume
+-------------------------------
+
+docker volume create joke_vol
+
+- if the file is being saved in "joke_vol" folder then
+absolute path will look like "/app/joke_vol/WG3ZlqhVmhQCIkrB0LrO.json"
+
+-------------------------------
+to inspect volume
+-------------------------------
+
+docker volume inspect joke_vol
+
+[
+    {
+        "CreatedAt": "2023-02-01T03:49:09Z",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/joke_vol/_data",
+        "Name": "joke_vol",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+
+
+-------------------------------
+to create container with mount volume
+-------------------------------
+
+docker run -p 8080:8080 -v joke_vol:/app/joke_vol --name ij-app-v5 ij-app:volume
+
+either "-v" or "--mount" can be used
+
+
+-------------------------------
+to inspect container to check volume specs
+-------------------------------
+
+docker container inspect ij-app-v5
+
+
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "joke_vol",
+                "Source": "/var/lib/docker/volumes/joke_vol/_data",
+                "Destination": "/app/joke_vol",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            },
+
+
+-------------------------------
+
+steps followed to run my current test
+
+gradle clean build
+docker build -t ij-img:volume .
+docker run -p 8080:8080 -v joke_vol:/app/joke_vol --name ij-con-v1 ij-img:volume
+docker run -p 8080:8080 -v joke_vol:/app/joke_vol --name ij-con-v2 ij-img:volume
+
+
+- run container v1 and create a "message1.json"
+- verify "message1.json" by calling "/getfile" endpoint
+- stop container v1
+- run container v2 and retrieve "message1.json"
+- if mount volume is properly setup then "message1.json" should be accessible by "/getfile" endpoint
+
+-------------------------------

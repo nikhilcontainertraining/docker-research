@@ -93,24 +93,4 @@ public class FileHandler {
         //return new FileInputStream("/app/joke_vol/"+fileName);
     }
 
-
-
-
-
-
-//    public InputStream getFile(String fileName) throws IOException {
-//        InputStream in = getClass()
-//                .getResourceAsStream("src/main/resources/static/json-files/"+fileName+".json");
-//        return in;
-//        return in.readAllBytes();
-//        return getClass()
-//                .getResourceAsStream("/src/main/resources/static/json-files/"+fileName+".json");
-//        return getClass()
-//                .getResourceAsStream("/app/app_voltest/"+fileName+".json");
-
-//        return new FileInputStream("/app/app_voltest/"+fileName+".json");
-        //String data = IOUtils.toString(fis, "UTF-8");
-
-//        return new FileInputStream("app/joke_vol/"+fileName);
-//    }
 }
