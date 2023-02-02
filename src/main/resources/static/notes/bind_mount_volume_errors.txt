@@ -1,0 +1,30 @@
+
+-------------------------------
+Common errors during bind mount
+-------------------------------
+
+docker run -p 8080:8080 -v joke_vol:/app/joke_vol -v "/Users/nikhilhiremath/Documents/Engineer/CKAD/Docker/apps/12-30/container_meta_data:/app" -v /app/lib --name ij-con-v9 ij-img:volume
+	- container_meta_data subfolders are created
+	- logs dir, sub dir's and log files are copied and updated dynamically in real time
+	- but joke_vol is created and empty. remains empty even after files are successfully created, saved and retrieved from mapped container volume/dir
+	- but host joke_vol remained empty
+
+
+docker run -p 8080:8080 -v joke_vol:/app/joke_vol -v "/Users/nikhilhiremath/Documents/Engineer/CKAD/Docker/apps/12-30/container_meta_data/joke_vol:/app/joke_vol" -v /app/lib --name ij-con-v10 ij-img:volume
+
+	Duplicate mount point error
+
+
+docker run -p 8080:8080 -v "/Users/nikhilhiremath/Documents/Engineer/CKAD/Docker/apps/12-30/container_meta_data/joke_vol:/app/joke_vol" -v /app/lib --name ij-con-v11 ij-img:volume
+	Works as asusual
+
+
+docker run -p 8080:8080 -v "/Users/nikhilhiremath/Documents/Engineer/CKAD/Docker/apps/12-30/container_meta_data/joke_vol:/app/joke_vol" -v /app/lib --name ij-con-v11 ij-img:volume
+
+
+docker run -p 8080:8080 -v /app/lib --name ij-con-v11 ij-img:volume
+	app starts but error when saving file in path since volume/dir/folder is available
+
+
+docker run -p 8080:8080 -v joke_vol:/app/joke_vol -v "/Users/nikhilhiremath/Documents/Engineer/CKAD/Docker/apps/12-30/container_meta_data:/app" -v /app/lib --name ij-con-v1 ij-img:volume
+docker run -p 8080:8080 -v joke_vol_v2:/app/joke_vol -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/docker-research-1:/app" -v /app/lib --name ij-con-v4 ij-img:volume

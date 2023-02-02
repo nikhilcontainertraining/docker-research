@@ -1,0 +1,117 @@
+--------------------------------------------------------------
+to create container with anonymous volume
+--------------------------------------------------------------
+- there are 2 ways to achieve this
+- 1. create a "Dockerfile" without volume definition
+    FROM gradle
+    WORKDIR /app
+    COPY /build/libs/docker-research-0.0.1-SNAPSHOT.jar /app/docker-research-0.0.1-SNAPSHOT.jar
+    EXPOSE 8
+    CMD ["java", "-jar", "/app/docker-research-0.0.1-SNAPSHOT.jar"]
+
+- 2. create a "Dockerfile" with volume definition
+    FROM gradle
+    WORKDIR /app
+    COPY /build/libs/docker-research-0.0.1-SNAPSHOT.jar /app/docker-research-0.0.1-SNAPSHOT.jar
+    EXPOSE 8
+    VOLUME [ "/app/joke_vol" ]
+    CMD ["java", "-jar", "/app/docker-research-0.0.1-SNAPSHOT.jar"]
+
+In both the case
+- the volumes are created by docker when container is created
+- deleted when container is deleted
+- data is not accessible across containers - volumes are hardwired to be used only by current container
+
+
+--------------------------------------------------------------
+NAMED volumes
+------------------------------------------------
+- for sharing data between containers
+- file/volume can be accessed by any container
+- volume lifecycle is not associated with the container
+- docker creates volumes when container is started with "-v" argument
+- but volumes are not deleted when container is stopped or deleted
+
+
+
+
+-------------------------------
+to create container with named volume
+-------------------------------
+
+docker run -p 8080:8080 -v joke_vol:/app/joke_vol --name ij-app-v5 ij-app:volume
+
+either "-v" or "--mount" can be used
+
+example:
+docker run -p 8080:8080 -v joke_vol_v3:/app/joke_vol --name ij-con-v3 ij-img:volume
+docker run -p 8080:8080 -v joke_vol_v4:/app/joke_vol --name ij-con-v4 ij-img:volume
+- the above containers v3 and v4 are connected to 2 different named volumes joke_vol_v3 and joke_vol_v4 respectively
+- ij-con-v3 <==> joke_vol_v3 volume
+- ij-con-v4 <==> joke_vol_v4 volume
+
+if container is started with a volume
+
+------------------------------------------------
+to view volumes
+------------------------------------------------
+docker volume ls
+DRIVER    VOLUME NAME
+local     0cad40d0865fe089b8d056ac5a977c995179d44e0cd66190c42c8914c4d827d9
+local     0ee58aa6826842bb6600ddba9bc135854b4f5a7a4b285b6f3f16ee71ff7854d6
+local     joke_vol
+local     joke_vol_v3
+local     joke_vol_v4
+local     joke_vol_v5
+
+
+-------------------------------
+to inspect container to check volume specs
+-------------------------------
+
+docker container inspect ij-app-v5
+
+
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "joke_vol",
+                "Source": "/var/lib/docker/volumes/joke_vol/_data",
+                "Destination": "/app/joke_vol",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            },
+
+
+--------------------------------------------------------------
+steps followed to run my current test
+--------------------------------------------------------------
+
+gradle clean build
+docker build -t ij-img:volume .
+docker run -p 8080:8080 -v joke_vol:/app/joke_vol --name ij-con-v1 ij-img:volume
+docker run -p 8080:8080 -v joke_vol:/app/joke_vol --name ij-con-v2 ij-img:volume
+
+
+- run container v1 and create a "message1.json"
+- verify "message1.json" by calling "/getfile" endpoint
+- stop container v1
+- run container v2 and retrieve "message1.json"
+- if mount volume is properly setup then "message1.json" should be accessible by "/getfile" endpoint
+
+
+
+------------------------------------------
+removing anonymous, named and bind volumes
+------------------------------------------
+
+docker volume prune
+- to remove all unused and detached volumes
+
+docker volume rm volume_name
+- to remove unused and detached volume by name
+
+------------------------------------------
+

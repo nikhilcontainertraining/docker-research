@@ -43,8 +43,8 @@ public class FileHandler {
         try {
             writeToFile("joke_vol", fileName, content);
 
-//            copyToLocation("src/main/resources/static/json-files/"+fileName,
-//                    "/app/joke_vol"+fileName);
+            copyToLocation("joke_vol/"+fileName,
+                    "backup/"+fileName);
         } catch (Exception e) {
             log.error("------ ------ Exception occurred");
             e.printStackTrace();
@@ -62,17 +62,18 @@ public class FileHandler {
             Files.copy(src, dest,
                     StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES, NOFOLLOW_LINKS);
         } catch (IOException e) {
+            log.error("------ ------ COPY error: IOException occurred");
             e.printStackTrace();
         }
     }
 
     public void writeToFile(String rootDir, String fileName, byte[] bytes) {
         log.info("------------------------------------------------------------");
-        FileOutputStream fos = null;
+
         File file = null;
         try {
             file = new File(rootDir, fileName);
-            fos = new FileOutputStream(file);
+            FileOutputStream fos = new FileOutputStream(file);
             fos.write(bytes);
             fos.flush();
 
@@ -89,8 +90,8 @@ public class FileHandler {
     }
 
     public InputStream getFile(String fileName) throws IOException {
-        return new FileInputStream("joke_vol/"+fileName);
-        //return new FileInputStream("/app/joke_vol/"+fileName);
+        //return new FileInputStream("joke_vol/"+fileName);
+        return new FileInputStream("backup/"+fileName);
     }
 
 }
