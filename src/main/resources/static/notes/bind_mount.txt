@@ -1,0 +1,93 @@
+
+- In case of BIND mount the app data is directly written on the directory in the local host drive.
+- Whereas with anonymous or named volume data is written in some location inside the docker VM
+- the location which is mapped with associated container volume
+- since accurate location of anonymous/named volumes are unknown they cannot be reused with other container
+- Then container that created the volume will be able to access upon multiple restarts unless container is deleted
+
+
+----------------------------------------------------------------
+Creating a volume
+----------------------------------------------------------------
+
+docker volume create joke_vol
+
+- if the file is being saved in "joke_vol" folder then
+absolute path will look like "/app/joke_vol/WG3ZlqhVmhQCIkrB0LrO.json"
+
+----------------------------------------------------------------
+to inspect volume
+----------------------------------------------------------------
+
+docker volume inspect joke_vol
+
+[
+    {
+        "CreatedAt": "2023-02-01T03:49:09Z",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/joke_vol/_data",
+        "Name": "joke_vol",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+
+
+----------------------------------------------------------------
+WORKING COMMANDS without creating volumes externally
+----------------------------------------------------------------
+
+docker run -p 8080:8080
+           -v joke_vol_v1:/app/joke_vol
+           -v "/Users/nikhilhiremath/Documents/Engineing/CKAD/Docker/apps/12-30/container_meta_data:/app"
+           -v /app/lib
+           --name ij-con-v3 ij-img:volume
+
+when the source code is updated to copy message.json files from "/app/joke_vol" to "/app/backup" directory
+- First we decided to copy the message json to "backup" dir because we want to  copy the message in a non volume directory
+- second we will modify the "getfile" api to fetch from the "backup" dir
+- so any new/modified file that we add in the host mount "backup" dir will is verified by call "getfile" api
+- meaning we can read the changes done in the bind mount too
+
+
+- we do not need to declare the "backup" dir as a volume like did to protect "/lib/docker-research.jar" using "-v /app/lib"
+- "backup" dir is not erased rather new files are added incrementally
+
+
+the container is connected to mounts
+- jar/lib mount
+- data mount
+
+----------------------------------------------------------------
+SOME additional commands
+----------------------------------------------------------------
+
+docker run -p 8080:8080
+            -v joke_vol_v1:/app/joke_vol
+            -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app:ro"
+            -v /app/lib
+            -v logs_vol:/app/logs
+            -v backup_vol:/app/backup --name ij-con-v1 ij-img:volume
+
+- spinning up a container with READ_ONLY bind mount
+- named volumes for logs and backup json's for logs and message retention
+- BUT replication of named volumes into host "container_meta_data" dir is broken
+- since volumes are conceptually not supposed bind to host directories rather BIND mount are meant to do it
+
+
+
+----------------------------------------------------------------
+BIND mount in READ_WRITE mode which is also DEFAULT
+----------------------------------------------------------------
+
+docker run -p 8080:8080 \
+           -v joke_vol_v1:/app/joke_vol \
+           -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app:rw" \
+           -v /app/lib \
+           --name ij-con-v7 \
+           ij-img:volume
+
+- BIND mounts are RW by default
+- hence logs and backup folders on host are updated as they are written/updated
+
