@@ -13,5 +13,7 @@ EXPOSE 80
 
 #VOLUME [ "/app/joke_vol" ] - annonymous volumes
 
+VOLUME [ "/app/lib" ]
+
 #CMD ["gradle", "bootRun"]
 CMD ["java", "-jar", "/app/lib/docker-research-0.0.1-SNAPSHOT.jar"]

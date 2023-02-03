@@ -1,0 +1,80 @@
+
+- The named volume and mount cannot be defined in the dockerfile
+- if done, they will all be created as anonymous volumes
+- from the bind mount exercise some volumes are required to be anonymous type because we need runtime code and libs to be immutable
+- A negative side to this approach - rebuilding IMAGE is required
+
+----------------------------------------------------------------
+Updated DOCKERFILE and docker commands like below
+----------------------------------------------------------------
+
+DOCKERFILE
+
+    FROM gradle
+    WORKDIR /app
+    COPY /build/libs/docker-research-0.0.1-SNAPSHOT.jar /app/lib/docker-research-0.0.1-SNAPSHOT.jar
+    EXPOSE 80
+    VOLUME [ "/app/lib" ]
+    CMD ["java", "-jar", "/app/lib/docker-research-0.0.1-SNAPSHOT.jar"]
+
+-------------------------------
+rebuild is required
+    gradle clean build --offline && docker build -t ij-img:volume .
+
+spin the container
+    docker run -p 8080:8080 \
+           -v joke_vol_v1:/app/joke_vol \
+           -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app:rw" \
+           --name ij-con-v1 \
+           ij-img:volume
+
+
+----------------------------------------------------------------
+container inspect results
+----------------------------------------------------------------
+
+BIND MOUNT is indicated by type=bind
+VOLUME is indicated by type=volume
+
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "joke_vol_v1",
+                "Source": "/var/lib/docker/volumes/joke_vol_v1/_data",
+                "Destination": "/app/joke_vol",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            },
+            {
+                "Type": "bind",
+                "Source": "/host_mnt/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data",
+                "Destination": "/app",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "volume",
+                "Name": "3720589c0c770f8efaf8e22619bb1bae7ecfd4909efd9faf4dbac615b7833814",
+                "Source": "/var/lib/docker/volumes/3720589c0c770f8efaf8e22619bb1bae7ecfd4909efd9faf4dbac615b7833814/_data",
+                "Destination": "/app/lib",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            },
+            {
+                "Type": "volume",
+                "Name": "48665755d6363e81bd099f915c601796b04c771a07f2b0c936d460f04945a0dd",
+                "Source": "/var/lib/docker/volumes/48665755d6363e81bd099f915c601796b04c771a07f2b0c936d460f04945a0dd/_data",
+                "Destination": "/home/gradle/.gradle",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ]
+
+----------------------------------------------------------------
