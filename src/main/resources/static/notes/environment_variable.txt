@@ -33,11 +33,15 @@ docker run -p 8080:8080 \
 ----------------------------------------------------------------
 With docker run arguments
 ----------------------------------------------------------------
+
+- First "ENV" declaration has to be removed from dockerfile if variable is passed with docker run command
+
+
 Either --env or -e can be used
 
 docker run -p 8080:8080 \
-           -e user_name=CodingBeast_from_DockerRun
+           -e user_name=CodingBeast_from_DockerRun \
            -v joke_vol_v1:/app/joke_vol \
            -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app" \
-           --name ij-con-v1 \
-           ij-img:env
+           --name ij-con-v2 \
+           ij-img:env_with_run
