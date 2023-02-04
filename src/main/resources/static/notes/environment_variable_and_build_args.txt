@@ -32,7 +32,7 @@ docker run -p 8080:8080 \
 
 
 ----------------------------------------------------------------
-With docker run key-value arguments
+With docker run key-value arguments in command-line
 ----------------------------------------------------------------
 
 - First "ENV" declaration has to be removed from dockerfile if variable is passed with docker run command
@@ -68,7 +68,7 @@ With docker build arguments
 - later the key could be accessed like expressions using "$"
 - "$key"
 
-sample dockerfile
+sample Dockerfile
 
     FROM gradle
     WORKDIR /app
@@ -79,5 +79,34 @@ sample dockerfile
     VOLUME [ "/app/lib" ]
     CMD ["java", "-jar", "/app/lib/docker-research-0.0.1-SNAPSHOT.jar"]
 
-with docker build command
 
+----------------------------------------------------------------
+With docker build key-value arguments in command-line
+----------------------------------------------------------------
+
+- "ARG" declaration has to be present in dockerfile for initialization
+- "ENV" declaration to set the property/variable from ARG
+- IMP NOTE: Command line argument take precedence over dockerfile declaration
+
+example:
+
+sample Dockerfile
+
+    FROM gradle
+    WORKDIR /app
+    COPY /build/libs/docker-research-0.0.1-SNAPSHOT.jar /app/lib/docker-research-0.0.1-SNAPSHOT.jar
+    VOLUME [ "/app/lib" ]
+
+    ARG SERVER_NAME=CodingBeast_Build_Args
+    ENV user_name $SERVER_NAME
+
+    CMD ["java", "-jar", "/app/lib/docker-research-0.0.1-SNAPSHOT.jar"]
+
+Docker commands
+    docker build  -t ij-img:buildargs --build-arg SERVER_NAME=CodingBeast_cmdLine_Build_Args .
+
+    docker run -p 8080:8080 \
+                -v joke_vol_v1:/app/joke_vol \
+                -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app" \
+                --name ij-con-v1 \
+                ij-img:buildargs
