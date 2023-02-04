@@ -3,7 +3,8 @@ Environment variables injection
 ----------------------------------------------------------------
 
 
-
+--env
+-e
 
 
 ----------------------------------------------------------------
@@ -31,7 +32,7 @@ docker run -p 8080:8080 \
 
 
 ----------------------------------------------------------------
-With docker run arguments
+With docker run key-value arguments
 ----------------------------------------------------------------
 
 - First "ENV" declaration has to be removed from dockerfile if variable is passed with docker run command
@@ -45,3 +46,38 @@ docker run -p 8080:8080 \
            -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app" \
            --name ij-con-v2 \
            ij-img:env_with_run
+
+----------------------------------------------------------------
+With docker run environment file arguments
+----------------------------------------------------------------
+
+environment file is passed with "--env-file" in docker run command
+
+docker run -p 8080:8080 \
+           --env-file ".env" \
+           -v joke_vol_v1:/app/joke_vol \
+           -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app" \
+           --name ij-con-v1 \
+           ij-img:envfile
+
+----------------------------------------------------------------
+With docker build arguments
+----------------------------------------------------------------
+
+- "ARG key=value" in Dockerfile
+- later the key could be accessed like expressions using "$"
+- "$key"
+
+sample dockerfile
+
+    FROM gradle
+    WORKDIR /app
+    COPY /build/libs/docker-research-0.0.1-SNAPSHOT.jar /app/lib/docker-research-0.0.1-SNAPSHOT.jar
+    ARG USERNAME=CodingBeast_Build_Args
+    EXPOSE 80
+    ENV user_name $USERNAME
+    VOLUME [ "/app/lib" ]
+    CMD ["java", "-jar", "/app/lib/docker-research-0.0.1-SNAPSHOT.jar"]
+
+with docker build command
+
