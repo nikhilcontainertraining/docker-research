@@ -22,10 +22,13 @@ public class DockerResearchApplication {
 
 	public static void main(String[] args) {
 		log.trace("starting Docker Research Application");
+		String unEnv = System.getenv("user_name");
+		userName = unEnv == null ? userName : unEnv;
 		try {
 //			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 //			userName = reader.readLine();
 			System.out.println("On Startup input :: " + userName);
+
 		} catch (Exception e) {
 			//System.out.println("System Error: " + e.getMessage());
 

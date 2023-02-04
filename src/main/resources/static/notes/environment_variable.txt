@@ -1,0 +1,43 @@
+----------------------------------------------------------------
+Environment variables injection
+----------------------------------------------------------------
+
+
+
+
+
+----------------------------------------------------------------
+In dockerfile
+----------------------------------------------------------------
+
+
+Dockerfile
+
+    FROM gradle
+    WORKDIR /app
+    COPY /build/libs/docker-research-0.0.1-SNAPSHOT.jar /app/lib/docker-research-0.0.1-SNAPSHOT.jar
+    EXPOSE 80
+    ENV user_name CodingBeast
+    VOLUME [ "/app/lib" ]
+    CMD ["java", "-jar", "/app/lib/docker-research-0.0.1-SNAPSHOT.jar"]
+
+
+
+docker run -p 8080:8080 \
+           -v joke_vol_v1:/app/joke_vol \
+           -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app" \
+           --name ij-con-v1 \
+           ij-img:env
+
+
+----------------------------------------------------------------
+With docker run arguments
+----------------------------------------------------------------
+Either --env or -e can be used
+
+docker run -p 8080:8080 \
+           -e user_name=CodingBeast_from_DockerRun
+           -v joke_vol_v1:/app/joke_vol \
+           -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app" \
+           --name ij-con-v1 \
+           ij-img:env
