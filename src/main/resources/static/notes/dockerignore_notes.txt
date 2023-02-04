@@ -1,0 +1,31 @@
+- docker ignore just like ".gitignore" to leave selected files and/or folders from the build image
+
+- "docker build" command validates the ".dockerignore" file and pre-evaluates the output before executing build
+
+------------------------------------------------------------------------------------------------------------------
+
+- for the current project if we include "build" dir in the dockerignore file then build fails with following error
+
+Nikhils-MBP:docker-research nikhilhiremath$ docker build -t ij-img:dockerignore .
+[+] Building 0.9s (7/7) FINISHED
+ => [internal] load build definition from Dockerfile                                                                                    0.0s
+ => => transferring dockerfile: 84B                                                                                                     0.0s
+ => [internal] load .dockerignore                                                                                                       0.0s
+ => => transferring context: 84B                                                                                                        0.0s
+ => [internal] load metadata for docker.io/library/gradle:latest                                                                        0.8s
+ => [1/3] FROM docker.io/library/gradle@sha256:bd8852274c9e10ecd00549e5d3a73edf2549c1c6442d808ce27d1e4a04251ebd                         0.0s
+ => [internal] load build context                                                                                                       0.0s
+ => => transferring context: 2B                                                                                                         0.0s
+ => CACHED [2/3] WORKDIR /app                                                                                                           0.0s
+ => ERROR [3/3] COPY /build/libs/docker-research-0.0.1-SNAPSHOT.jar /app/lib/docker-research-0.0.1-SNAPSHOT.jar                         0.0s
+------
+ > [3/3] COPY /build/libs/docker-research-0.0.1-SNAPSHOT.jar /app/lib/docker-research-0.0.1-SNAPSHOT.jar:
+------
+failed to compute cache key: "/build/libs/docker-research-0.0.1-SNAPSHOT.jar" not found: not found
+
+------------------------------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
