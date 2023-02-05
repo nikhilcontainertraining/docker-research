@@ -92,5 +92,38 @@ docker run -p 8080:8080 --name dr-con-c2c dr-img:c2c
 
 
 
+------------------------------------------------------------
+creating docker network
+------------------------------------------------------------
+
+- a "docker network" is be created for efficiently handling container communication/networking configuration
+- for ex., the is NO need to inspect "mysql-con" or any other container to fetch the IP address
+- to get around the provider and consumer container/s must be within the same network
+- unlike docker volume network is created by default if passed with the command
+- has to be explicitly created
+- then concerned containers must be started with "--network" argument in the "docker run" command
+- the consumer container shall use the produced container name in the host domain instead of ip or "docker.host.internal"
+
+---------------------------------------------
+docker network create docker-research-network
+
+docker run -it \
+           --network docker-research-network \
+           --name mysql-con \
+           -e MYSQL_ROOT_PASSWORD=Mig5@mig5 \
+           -u root \
+           -d \
+           mysql
+
+- in the app the host/domain part of URL should be name of the container which you wish to connect
+- here ip-address or localhost is changed to "mysql-con"
+- "jdbc:mysql://mysql-con:3306/card_repository"
+
+gradle clean build && docker build -t dr-img:network .
+
+docker run --network docker-research-network -p 8080:8080 --name dr-con-network dr-img:network
+
+---------------------------------------------
+
 
 
