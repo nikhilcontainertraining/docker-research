@@ -1,0 +1,39 @@
+Docker networking
+--------------------------------------------------------------------
+
+3 types
+ - container    to  WWW
+ - container    to  local-host(hosting machine)
+ - container    to container
+
+
+--------------------------------------------------------------------
+Container to WWW
+--------------------------------------------------------------------
+
+by default all docker containers can reach WWW without additional configuration
+
+
+gradle clean build && docker build -t dr:www .
+
+docker run -p 8080:8080 \
+           -v joke_vol_v1:/app/joke_vol \
+           -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/12-30/container_meta_data:/app" \
+           --name dr-www-v1 \
+           dr:www
+
+
+
+--------------------------------------------------------------------
+Container to Host Machine
+--------------------------------------------------------------------
+
+- docker networking module does not understand interpret localhost as host-machine
+- since it itself is a localhost
+- host machine domain is identified by --> "host.docker.internal"
+
+
+--------------------------------------------------------------------
+Container to Container
+--------------------------------------------------------------------
+
