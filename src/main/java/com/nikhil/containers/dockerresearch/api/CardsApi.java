@@ -1,7 +1,7 @@
 package com.nikhil.containers.dockerresearch.api;
 
 import com.nikhil.containers.dockerresearch.model.Card;
-import com.nikhil.containers.dockerresearch.service.MovieHandler;
+import com.nikhil.containers.dockerresearch.service.CardsHandler;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,26 +12,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
 @Log4j2
-public class MoviesApi {
+public class CardsApi {
 
-    static Logger log = LogManager.getLogger(MoviesApi.class);
+    static Logger log = LogManager.getLogger(CardsApi.class);
 
     @Autowired
-    private MovieHandler movieHandler;
+    private CardsHandler cardsHandler;
 
-    @GetMapping(value = "/movies")
+    @GetMapping(value = "/cards")
     @ResponseBody
-    public ResponseEntity<List<Card>> getMovies() throws IOException {
-        log.trace("entered GET MOVIES api");
+    public ResponseEntity<List<Card>> getCards() {
+        log.trace("GET CARDS api STARTED");
 
-        List<Card> cards = movieHandler.getMovies();
+        List<Card> cards = cardsHandler.getCards();
 
-        log.trace("exited GET joke api");
+        log.trace("GET CARDS api COMPLETED");
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(cards);

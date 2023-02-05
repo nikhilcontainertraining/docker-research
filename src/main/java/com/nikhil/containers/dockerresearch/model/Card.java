@@ -3,13 +3,18 @@ package com.nikhil.containers.dockerresearch.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
-@Data
+@Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Card {
-    private String type;
+
+    @Id
     private String number;
+    private String type;
     private String expiration;
     private String owner;
 

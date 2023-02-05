@@ -1,6 +1,7 @@
 package com.nikhil.containers.dockerresearch.service;
 import com.nikhil.containers.dockerresearch.model.Card;
 import com.nikhil.containers.dockerresearch.model.GetCardsResponse;
+import com.nikhil.containers.dockerresearch.repository.CardRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,17 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class MovieHandler {
+public class CardsHandler {
 
-    static Logger log = LogManager.getLogger(MovieHandler.class);
+    static Logger log = LogManager.getLogger(CardsHandler.class);
 
     @Autowired
     private RestTemplate restTemplate;
 
-    public List<Card> getMovies() {
+    @Autowired
+    private CardRepository cardRepository;
+
+    public List<Card> getCards() {
         log.info("Request to getMovies from internet STARTED");
 
         Map<String, String> uriVariables = new HashMap<>();
@@ -41,9 +45,7 @@ public class MovieHandler {
         List<Card> cards = Objects.requireNonNull(
                 getCardsResponse.getBody() ).getData();
 
-//                restTemplate.getForEntity("https://fakerapi.it/api/v1/credit_cards",
-//                        GetCardsResponse.class, uriVariables);
-
+        cards.forEach(card -> cardRepository.save(card));
 
         log.info("Request to getMovies from internet COMPLETE");
 
