@@ -55,3 +55,42 @@ docker run -p 8080:8080 \
 Container to Container
 --------------------------------------------------------------------
 
+- spinning a mysql in a docker container
+- "dr-con-to-con" container is connected to mysql database in dedicated "mysql-con" container
+
+
+---------------
+MYSQL container
+---------------
+docker run -it \
+           --name mysql-con \
+           -e MYSQL_ROOT_PASSWORD=Mig5@mig5 \
+           -u root \
+           mysql
+
+docker exec -it mysql-con bash
+
+-- inside bash
+mysql -u root -p
+
+
+-----
+docker container inspect mysql-con
+
+- fetch the IP address of the container
+
+------------------------------
+Docker-Research container
+------------------------------
+
+gradle clean build && docker build -t dr-img:c2c .
+
+- build the image with changes
+
+-----
+docker run -p 8080:8080 --name dr-con-c2c dr-img:c2c
+
+
+
+
+
