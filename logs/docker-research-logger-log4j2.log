@@ -1,0 +1,31 @@
+2023-02-12 23:21:00,030 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-1] -- file abs path -- /Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/workspace/docker-research/joke_vol/0YMw6wekZXhWguv6zXHH.json
+2023-02-12 23:21:00,037 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-1] ------ ------ COPY error: IOException occurred
+2023-02-12 23:21:00,038 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-1] filename: 0YMw6wekZXhWguv6zXHH.json
+2023-02-12 23:21:00,038 INFO c.n.c.d.a.FirstRestApi [http-nio-8080-exec-1] Default Server message log: 0YMw6wekZXhWguv6zXHH
+2023-02-12 23:21:18,412 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-2] ------------------------------------------------------------
+2023-02-12 23:21:18,412 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-2] ------ ------ FileNotFoundException occurred
+2023-02-12 23:21:18,413 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-2] [Ljava.lang.StackTraceElement;@5917cc9e
+2023-02-12 23:21:18,413 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-2] -- file rel path -- joke_vol/trJeeapcoq11rBGbrJxj.json
+2023-02-12 23:21:18,413 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-2] -- file abs path -- /Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/workspace/docker-research/joke_vol/trJeeapcoq11rBGbrJxj.json
+2023-02-12 23:21:18,413 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-2] ------ ------ COPY error: IOException occurred
+2023-02-12 23:21:18,414 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-2] filename: trJeeapcoq11rBGbrJxj.json
+2023-02-12 23:21:18,415 INFO c.n.c.d.a.FirstRestApi [http-nio-8080-exec-2] Default Server message log: trJeeapcoq11rBGbrJxj
+2023-02-12 23:22:12,987 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-3] ------------------------------------------------------------
+2023-02-12 23:22:12,987 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-3] ------ ------ FileNotFoundException occurred
+2023-02-12 23:22:12,987 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-3] [Ljava.lang.StackTraceElement;@5d9052d0
+2023-02-12 23:22:12,987 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-3] -- file rel path -- joke_vol/M39n4w1NtkOtivXOLyUm.json
+2023-02-12 23:22:12,988 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-3] -- file abs path -- /Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/workspace/docker-research/joke_vol/M39n4w1NtkOtivXOLyUm.json
+2023-02-12 23:22:12,988 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-3] ------ ------ COPY error: IOException occurred
+2023-02-12 23:22:12,988 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-3] filename: M39n4w1NtkOtivXOLyUm.json
+2023-02-12 23:22:12,989 INFO c.n.c.d.a.FirstRestApi [http-nio-8080-exec-3] Default Server message log: M39n4w1NtkOtivXOLyUm
+2023-02-12 23:22:43,965 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-4] ------------------------------------------------------------
+2023-02-12 23:22:43,965 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-4] ------ ------ FileNotFoundException occurred
+2023-02-12 23:22:43,965 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-4] [Ljava.lang.StackTraceElement;@613981c9
+2023-02-12 23:22:43,966 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-4] -- file rel path -- joke_vol/7NnlTjaAagUAxmH2xmoZ.json
+2023-02-12 23:22:43,966 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-4] -- file abs path -- /Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/workspace/docker-research/joke_vol/7NnlTjaAagUAxmH2xmoZ.json
+2023-02-12 23:22:43,966 ERROR c.n.c.d.s.FileHandler [http-nio-8080-exec-4] ------ ------ COPY error: IOException occurred
+2023-02-12 23:22:43,967 INFO c.n.c.d.s.FileHandler [http-nio-8080-exec-4] filename: 7NnlTjaAagUAxmH2xmoZ.json
+2023-02-12 23:22:43,967 INFO c.n.c.d.a.FirstRestApi [http-nio-8080-exec-4] Default Server message log: 7NnlTjaAagUAxmH2xmoZ
+2023-02-12 23:50:46,830 INFO o.s.o.j.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-12 23:50:46,837 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-02-12 23:50:46,844 INFO c.z.h.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.

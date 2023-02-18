@@ -1,0 +1,54 @@
+
+Deploying 3 apps in a single network
+    - database --> mysql
+    - backend  --> spring-boot  --> joke API | cards API - connects to faker_api(mock credit cards)
+    - frontend --> react app    --> call joke api to add a joke | display joke file link
+
+
+----------------------------------------------------------------
+MYSQL
+----------------------------------------------------------------
+docker run -d
+           -it
+           -p 3306:3306
+           --name mysql-con mysql
+
+
+----------------------------------------------------------------
+BACKEND
+----------------------------------------------------------------
+docker run --rm \
+           --network docker-research-network \
+           -v joke_vol_v1:/app/joke_vol \
+           -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/workspace/container_meta_data:/app" \
+           -p 8080:8080 \
+           --name dr-con-network dr-img:network
+
+server code changes
+- spring.datasource.url=jdbc:mysql://mysql-con:3306/card_repository
+-
+
+-------------------
+
+docker build -t be-dr-img:v1 .
+
+docker run --rm \
+           --network docker-research-network \
+           -v joke_vol_v1:/app/joke_vol \
+           -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/workspace/container_meta_data:/app" \
+           -p 8080:8080 \
+           --name be-dr-con be-dr-img:v1
+
+----------------------------------------------------------------
+FRONTEND
+----------------------------------------------------------------
+
+docker build -t fe-dr-img:v1 .
+
+docker run --rm \
+           --network docker-research-network \
+           -v joke_vol_v1:/app/joke_vol \
+           -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/workspace/container_meta_data:/app" \
+           -p 8081:8081 \
+           --name fe-dr-con fe-dr-img:v1
+

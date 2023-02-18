@@ -5,6 +5,7 @@ public class User {
     private String name;
     private String id;
     private String message;
+    private String fileLink;
 
     public String getName() {
         return name;
@@ -28,5 +29,13 @@ public class User {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getFileLink() {
+        return fileLink;
+    }
+
+    public void setFileLink(String fileLink) {
+        this.fileLink = fileLink;
     }
 }

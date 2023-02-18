@@ -1,6 +1,9 @@
 package com.nikhil.containers.dockerresearch.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nikhil.containers.dockerresearch.model.User;
+import com.nikhil.containers.dockerresearch.model.Users;
 import com.nikhil.containers.dockerresearch.service.FileHandler;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +26,7 @@ import java.util.UUID;
 
 import static com.nikhil.containers.dockerresearch.DockerResearchApplication.userName;
 
+@CrossOrigin
 @RestController
 @Log4j2
 public class FirstRestApi {
@@ -36,6 +41,7 @@ public class FirstRestApi {
 //            produces = MediaType.APPLICATION_JSON_VALUE)
 
 
+    @CrossOrigin
     @GetMapping(value = "/getfile/{filename}")
     @ResponseBody
     public ResponseEntity<InputStreamResource> gtFile(@PathVariable String filename) throws IOException {
@@ -51,9 +57,9 @@ public class FirstRestApi {
     }
 
 
-
+    @CrossOrigin
     @RequestMapping("/joke")
-    public String home() {
+    public String home() throws JsonProcessingException {
         log.trace("entered joke api");
 
         String message = RandomStringUtils.randomAlphanumeric(20);
@@ -62,20 +68,28 @@ public class FirstRestApi {
         user.setName(userName);
         user.setId(UUID.randomUUID().toString());
         user.setMessage(message);
+        user.setFileLink("http://localhost:8080/getfile/" + message);
+
+        Users users = new Users();
+        users.addUser(user);
+
 
         fileHandler.createJsonFile(user);
 
         log.info(userName + " message log: " + message);
 
         log.trace("exiting joke api");
-        return buildResponseHtml(
-                "http://localhost:8080/getfile/" + message
-//                , "http://localhost:8080/joke_vol/" + message + ".json"
-//                , "http://localhost:8080/app/joke_vol/" + message + ".json"
-//                , "http://localhost:8080/" + message + ".json"
-//                , "http://localhost:8080/templates/" + message + ".json"
-//                , "http://localhost:8080/webapp/" + message + ".json"
-        );
+
+        return new ObjectMapper().writeValueAsString(users);
+
+//        return buildResponseHtml(
+//                "http://localhost:8080/getfile/" + message
+////                , "http://localhost:8080/joke_vol/" + message + ".json"
+////                , "http://localhost:8080/app/joke_vol/" + message + ".json"
+////                , "http://localhost:8080/" + message + ".json"
+////                , "http://localhost:8080/templates/" + message + ".json"
+////                , "http://localhost:8080/webapp/" + message + ".json"
+//        );
     }
 
     private String buildResponseHtml(String... content) {
