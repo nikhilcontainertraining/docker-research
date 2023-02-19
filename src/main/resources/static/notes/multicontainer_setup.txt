@@ -52,3 +52,23 @@ docker run --rm \
            -p 8081:8081 \
            --name fe-dr-con fe-dr-img:v1
 
+-------------------
+MULTICONTAINER
+-------------------
+gradle clean build
+docker build -t fe-img:java .
+docker run -it --rm -p 8081:8081 --network docker-research-network --name fe-con-java-v1 fe-img:java
+
+gradle clean build
+docker build -t be-dr-img:v1
+docker run --rm \
+            --network docker-research-network
+            -v joke_vol_v1:/app/joke_vol
+            -v "/Users/nikhilhiremath/Documents/Engineering/CKAD/Docker/apps/workspace/container_meta_data:/app"
+            -p 8080:8080
+            --name be-dr-con be-dr-img:v1
+
+docker run myqsl --name mysql-con --network docker-research-network
+
+
+
